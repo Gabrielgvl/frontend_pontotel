@@ -10,6 +10,7 @@ import PasswordInput from '../../../components/PasswordInput';
 import Flex from '../../../components/Flex';
 import ButtonProgress from '../../../components/ButtonProgress';
 import useNotistack from '../../../hooks/useNotistack';
+import { useRegister } from '../../../requests/auth';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -30,29 +31,23 @@ const validationSchema = Yup.object().shape({
 const RegisterForm = ({ setRegister }) => {
   const { successSnack, errorSnack } = useNotistack();
   const { handleLogin } = useJwtAuth();
-  const [, register] = [];
-  const { logIn } = useJwtAuth();
+  const [, register] = useRegister();
 
   return (
     <Formik
-      onSubmit={async ({ username, name, password }, { setSubmitting }) => {
+      onSubmit={async ({ username, password }, { setSubmitting }) => {
         try {
           const hashedPassword = sha512(encodeURI(password));
           const { data } = await register({
             data: {
               username,
-              name,
-              hashedPassword,
-              role: {
-                label: 'admin',
-                privileges: [],
-              },
+              hashed_password: hashedPassword,
             },
           });
-          const { token } = data;
-          if (token) {
-            handleLogin(token);
-            successSnack('Seja Bem-Vindo!');
+          const { access_token: accessToken } = data;
+          if (accessToken) {
+            handleLogin(accessToken);
+            successSnack('Usuario criado com sucesso!');
           } else {
             errorSnack('Autenticação inválida!');
           }
@@ -63,7 +58,6 @@ const RegisterForm = ({ setRegister }) => {
       }}
       initialValues={{
         username: '',
-        name: '',
         password: '',
         confirmPassword: '',
       }}

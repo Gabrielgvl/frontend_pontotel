@@ -10,7 +10,7 @@ import * as pathNames from './pathNames';
 const navigator = [
   {
     name: 'Início',
-    path: pathNames.DASHBOARD,
+    path: pathNames.HOMEPAGE,
     icon: Home,
   },
   {

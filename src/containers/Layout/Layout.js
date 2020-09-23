@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 
 import { withRouter } from 'react-router-dom';
+import useJwtAuth from '@gabrielgvl/jwt_auth_react';
 import { Container, Content } from './styles';
 import useMobile from '../../hooks/useMobile';
 import Routes from '../../routes';
@@ -8,6 +9,7 @@ import Routes from '../../routes';
 const Layout = withRouter(({ location }) => {
   const isMobile = useMobile();
   const ref = useRef(null);
+  const { setUserInfo } = useJwtAuth();
 
   useEffect(() => {
     if (!isMobile) {
@@ -15,6 +17,10 @@ const Layout = withRouter(({ location }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  useEffect(() => {
+    setUserInfo();
+  }, []);
 
   return (
     <>

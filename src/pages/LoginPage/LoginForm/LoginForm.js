@@ -9,23 +9,23 @@ import ButtonProgress from 'components/ButtonProgress';
 import PasswordInput from 'components/PasswordInput';
 
 import useJwtAuth from '@gabrielgvl/jwt_auth_react';
+import { sha512 } from 'js-sha512';
 import { Form } from './styles';
-// import { useLogin } from '../../../requests/auth';
 import FormikTextField from '../../../components/FormikTextField';
 import useNotistack from '../../../hooks/useNotistack';
+import { useLogin } from '../../../requests/auth';
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('E-mail inválido')
-    .required('Informe o e-mail')
+  username: Yup.string()
+    .required('Informe o Nome de Usuario')
     .trim(),
   password: Yup.string().required('Informe a senha'),
 });
 
-const LoginForm = ({setRegister}) => {
+const LoginForm = ({ setRegister }) => {
   const { successSnack, errorSnack } = useNotistack();
   const { handleLogin } = useJwtAuth();
-  const [, login] = []; // useLogin();
+  const [, login] = useLogin();
 
   useEffect(() => {
     localStorage.clear();
@@ -34,16 +34,21 @@ const LoginForm = ({setRegister}) => {
   return (
     <Formik
       initialValues={{
-        email: '',
+        username: '',
         password: '',
       }}
-      onSubmit={async ({ email, password }, { setSubmitting }) => {
+      onSubmit={async ({ username, password }, { setSubmitting }) => {
         try {
-          const { data } = await login({ data: { email, password } });
-          const { token } = data;
-          if (token) {
-            handleLogin(token);
+          const hashedPassword = sha512(encodeURI(password));
+          const { data } = await login({
+            headers: {
+              Authorization: `Basic ${btoa(`${username}:${hashedPassword}`)}`,
+            },
+          });
+          const { access_token: accessToken } = data;
+          if (accessToken) {
             successSnack('Seja Bem-Vindo!');
+            handleLogin(accessToken);
           } else {
             errorSnack('Autenticação inválida!');
           }

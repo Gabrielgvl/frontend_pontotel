@@ -1,12 +1,13 @@
 // @material-ui/icons
 import * as pathNames from './pathNames';
+import HomePage from '../pages/HomePage';
 
 const routes = [
-  // {
-  //   path: pathNames.DASHBOARD,
-  //   component: DashboardPage,
-  //   exact: true,
-  // },
+  {
+    path: pathNames.HOMEPAGE,
+    component: HomePage,
+    exact: true,
+  },
 ];
 
 export default routes;

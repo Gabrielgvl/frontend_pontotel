@@ -4,4 +4,4 @@ export const NOTFOUND = '/404';
 
 const PREFIX = APP === '/' ? '' : APP;
 
-export const DASHBOARD = `${PREFIX}/`;
+export const HOMEPAGE = `${PREFIX}/`;
