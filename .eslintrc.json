@@ -1,0 +1,39 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "plugins": ["react", "react-hooks", "jsx-a11y", "import"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".js", ".jsx", ".tsx", ".ts"]
+      }
+    ],
+    "global-require": "off",
+    "no-plusplus": "off",
+    "import/prefer-default-export": "off",
+    "consistent-return": "off",
+    "no-useless-return": "off",
+    "import/no-unresolved": "off",
+    "react/forbid-prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
+    "no-underscore-dangle": "off",
+    "react/require-default-props": "off",
+    "react/no-array-index-key": "off",
+    "no-nested-ternary": "off",
+    "import/named": "off",
+    "no-alert": "off",
+    "no-console": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/extensions": "off",
+    "import/no-named-as-default": "off",
+    "import/no-cycle": "off"
+  }
+}
