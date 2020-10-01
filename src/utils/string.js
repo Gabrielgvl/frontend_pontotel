@@ -6,4 +6,4 @@ export const handleShort = (rawName) => {
   return name.toUpperCase();
 };
 
-export const toMoney = (money) => (`R$${money.toFixed(2)}`).replace('.', ',');
+export const toMoney = (money = 0 || '') => (`R$${parseFloat(money).toFixed(2)}`).replace('.', ',');

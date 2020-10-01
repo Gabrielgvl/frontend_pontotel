@@ -12,6 +12,7 @@ import {
   Container, HeaderContent, Wrap, Logo, ProfileContainer,
 } from './styles';
 import ProfilePic from './ProfilePic';
+import SiteMenu from "../../components/CompanyMenu";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,6 +24,7 @@ const Header = () => {
       <HeaderContent>
         <Wrap>
           <Logo src={PontoTelLogo} alt="Safra Payback" />
+          <SiteMenu />
         </Wrap>
         <Wrap>
           {!loading && dataNotification && (

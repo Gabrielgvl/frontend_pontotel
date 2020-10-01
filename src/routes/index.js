@@ -1,11 +1,9 @@
 import React, { Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { SnackbarProvider } from 'notistack';
 import { RouteWithSubRoutes } from './RoutesWithSubRoutes';
 import routes from './routes';
 import loginRoutes from './loginRoutes';
 import Loading from '../components/Loading';
-import SnackbarActions from '../components/Snackbar/SnackbarActions';
 import indexRoutes from './indexRoutes';
 
 /**
@@ -38,29 +36,23 @@ export const LoginRoutes = () => (
  * Router para renderizar rotas principais (Painel, Login, Cadastro)
  */
 export const IndexRoutes = () => (
-  <SnackbarProvider
-    maxSnack={5}
-    preventDuplicate
-    action={(key) => <SnackbarActions id={key} />}
-  >
-    <Switch>
-      {indexRoutes.map((route, key) => {
-        if (route.redirect) {
-          return (
-            <Redirect to={route.to} from={route.from} key={key.toString()} />
-          );
-        }
+  <Switch>
+    {indexRoutes.map((route, key) => {
+      if (route.redirect) {
         return (
-          <Route
-            path={route.path}
-            component={route.component}
-            {...route}
-            key={key.toString()}
-          />
+          <Redirect to={route.to} from={route.from} key={key.toString()} />
         );
-      })}
-    </Switch>
-  </SnackbarProvider>
+      }
+      return (
+        <Route
+          path={route.path}
+          component={route.component}
+          {...route}
+          key={key.toString()}
+        />
+      );
+    })}
+  </Switch>
 );
 
 export default Routes;
